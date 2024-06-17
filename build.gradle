@@ -7,19 +7,24 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
+        classpath 'com.github.jengelman.gradle.plugins:shadow:6.1.0'
     }
 }
 
 plugins {
     id 'java'
-    id 'com.github.johnrengelman.shadow' version '2.0.4'
+    id 'com.github.johnrengelman.shadow' version '6.1.0'
+    id 'maven-publish' // Replace 'maven' plugin with 'maven-publish'
 }
 
 group 'me.realized'
 version '3.2.8'
 
-compileJava.options.encoding = 'UTF-8'
+compileJava {
+    options.encoding = 'UTF-8'
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
 
 processResources {
     def group = project.group.toString() + "." + project.name.toLowerCase() + ".shaded"
@@ -69,20 +74,20 @@ repositories {
 }
 
 dependencies {
-    compile 'org.projectlombok:lombok:1.18.22'
-    compile 'org.spigotmc:spigot-api:1.14.4-R0.1-SNAPSHOT'
-    compile (name: 'MVdWPlaceholderAPI-3.1.1') {
+    implementation 'org.projectlombok:lombok:1.18.22'
+    implementation 'org.spigotmc:spigot-api:1.14.4-R0.1-SNAPSHOT'
+    implementation (name: 'MVdWPlaceholderAPI-3.1.1') {
         transitive = false
     }
-    compile name: 'Vault-1.6.7'
-    compile 'me.clip:placeholderapi:2.10.9'
+    implementation name: 'Vault-1.6.7'
+    implementation 'me.clip:placeholderapi:2.10.9'
 
     // shaded dependencies
-    compile 'redis.clients:jedis:3.5.1'
-    compile 'org.apache.commons:commons-pool2:2.4.2'
-    compile 'com.zaxxer:HikariCP:4.0.2'
-    compile 'org.slf4j:slf4j-nop:1.7.32'
-    compile 'org.bstats:bstats-bukkit:1.7'
+    implementation 'redis.clients:jedis:3.5.1'
+    implementation 'org.apache.commons:commons-pool2:2.4.2'
+    implementation 'com.zaxxer:HikariCP:4.0.2'
+    implementation 'org.slf4j:slf4j-nop:1.7.32'
+    implementation 'org.bstats:bstats-bukkit:1.7'
 }
 
 clean.doFirst {
@@ -91,10 +96,11 @@ clean.doFirst {
 
 shadowJar {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    destinationDir = file("$rootDir/out/")
-    sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
-    baseName = 'TokenManager'
-    classifier = null
+    destinationDirectory = file("$rootDir/out/")
+    archiveBaseName.set('TokenManager')
+    archiveClassifier.set('')
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 
     dependencies {
         include(dependency('redis.clients:.*'))
@@ -114,3 +120,16 @@ shadowJar {
 }
 
 build.dependsOn(shadowJar)
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            url = uri("$buildDir/repo")
+        }
+    }
+}
