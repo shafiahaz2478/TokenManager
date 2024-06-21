@@ -1,14 +1,17 @@
 package me.realized.tokenmanager.hook.hooks;
 
-import be.maximvdw.placeholderapi.PlaceholderAPI;
-import be.maximvdw.placeholderapi.PlaceholderReplaceEvent;
-import be.maximvdw.placeholderapi.PlaceholderReplacer;
+//import be.maximvdw.placeholderapi.PlaceholderAPI;
+//import be.maximvdw.placeholderapi.PlaceholderReplaceEvent;
+//import be.maximvdw.placeholderapi.PlaceholderReplacer;
 import me.realized.tokenmanager.TokenManagerPlugin;
 import me.realized.tokenmanager.util.hook.PluginHook;
 
 public class MVdWPlaceholderHook extends PluginHook<TokenManagerPlugin> {
+    public MVdWPlaceholderHook(TokenManagerPlugin plugin, String name) {
+        super(plugin, name);
+    }
 
-    public MVdWPlaceholderHook(final TokenManagerPlugin plugin) {
+/*    public MVdWPlaceholderHook(final TokenManagerPlugin plugin) {
         super(plugin, "MVdWPlaceholderAPI");
 
         final Placeholders placeholders = new Placeholders();
@@ -30,5 +33,5 @@ public class MVdWPlaceholderHook extends PluginHook<TokenManagerPlugin> {
         public String onPlaceholderReplace(final PlaceholderReplaceEvent event) {
             return plugin.handlePlaceholderRequest(event.getPlayer(), event.getPlaceholder().substring(3));
         }
-    }
+    }*/
 }
