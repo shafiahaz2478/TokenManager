@@ -83,10 +83,10 @@ dependencies {
     compileOnly 'me.clip:placeholderapi:2.10.9'
 
     // shaded dependencies
-    implementation 'redis.clients:jedis:3.5.1'
-    implementation 'org.apache.commons:commons-pool2:2.4.2'
-    implementation 'com.zaxxer:HikariCP:4.0.2'
-    implementation 'org.slf4j:slf4j-nop:1.7.32'
+    implementation 'redis.clients:jedis:5.1.2'
+    implementation 'org.apache.commons:commons-pool2:2.12.0'
+    implementation 'com.zaxxer:HikariCP:4.0.3'
+    implementation 'org.slf4j:slf4j-nop:2.0.13'
     implementation 'org.bstats:bstats-bukkit:3.0.2'
 }
 
